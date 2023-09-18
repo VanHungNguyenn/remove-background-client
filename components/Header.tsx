@@ -1,29 +1,17 @@
+'use client'
 import React from 'react'
 import Container from './Container'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Button } from './ui/button'
-
-const routes = [
-	{
-		label: 'Home',
-		href: '/',
-	},
-	{
-		label: 'How to use',
-		href: '/how-to-use',
-	},
-	{
-		label: 'Tools & API',
-		href: '/tools-api',
-	},
-	{
-		label: 'Pricing',
-		href: '/pricing',
-	},
-]
+import { Sun, Moon } from 'lucide-react'
+import ProfileButtons from './ProfileButtons'
+import routes from '@/constants/routes'
+import { useTheme } from 'next-themes'
 
 const Header = () => {
+	const { theme, setTheme } = useTheme()
+
 	return (
 		<header className='flex justify-center items-center py-3 px-4 border-b'>
 			<Container>
@@ -56,7 +44,21 @@ const Header = () => {
 					{/* Buttons feature */}
 					<div className='flex items-center'>
 						{/* Dark mode */}
+						<Button
+							variant='ghost'
+							size='icon'
+							aria-label='Toggle theme'
+							className='mr-6'
+							onClick={() =>
+								setTheme(theme === 'dark' ? 'light' : 'dark')
+							}
+						>
+							<Sun className='h-6 w-6 rotate-0 scale-100 transition-all dark:rotate-180 dark:scale-0' />
+							<Moon className='absolute h-6 w-6 rotate-180 scale-0 transition-all dark:rotate-0 dark:scale-100' />
+							<span className='sr-only'>Toggle Theme</span>
+						</Button>
 						{/* Authen Button */}
+						<ProfileButtons />
 					</div>
 				</div>
 			</Container>
