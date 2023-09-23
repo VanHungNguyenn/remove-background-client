@@ -13,10 +13,9 @@ const Header = () => {
 	const { theme, setTheme } = useTheme()
 
 	return (
-		<header className='flex justify-center items-center py-3 px-4 border-b'>
+		<header className='flex justify-center items-center py-4 border-b fixed top-0 left-0 right-0 z-50 bg-white dark:bg-gray-900'>
 			<Container>
-				<div className='relative flex items-center justify-between h-16 w-full'>
-					{/* Logo */}
+				<div className='relative flex items-center justify-between h-16 w-full px-2'>
 					<Link href='/'>
 						<Image
 							src='/logo.png'
@@ -26,7 +25,7 @@ const Header = () => {
 							className='cursor-pointer'
 						/>
 					</Link>
-					{/* Navbar */}
+
 					<nav className='mx-6 flex items-center gap-4 lg:gap-6'>
 						{routes.map((route, index) => {
 							return (

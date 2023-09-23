@@ -30,7 +30,7 @@ export default function RootLayout({
 					disableTransitionOnChange
 				>
 					<Header />
-					{children}
+					<div className='min-h-screen mt-24'>{children}</div>
 					<Footer />
 				</ThemeProvider>
 			</body>

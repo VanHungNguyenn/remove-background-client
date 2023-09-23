@@ -4,8 +4,8 @@ const routes = [
 		href: '/',
 	},
 	{
-		label: 'How to use',
-		href: '/how-to-use',
+		label: 'Remove background',
+		href: '/remove-background',
 	},
 	{
 		label: 'Tools & API',
