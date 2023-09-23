@@ -6,7 +6,7 @@ const ComingSoon = () => {
 		<Container>
 			<div className='flex flex-col items-center justify-center h-screen'>
 				<h1 className='text-4xl font-bold text-center mb-8'>
-					Comming Soon
+					Coming Soon
 				</h1>
 				<p className='text-center'>This page is under construction</p>
 			</div>

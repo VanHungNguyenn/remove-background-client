@@ -6,11 +6,13 @@ import Image from 'next/image'
 import { Button } from './ui/button'
 import { Sun, Moon } from 'lucide-react'
 import ProfileButtons from './ProfileButtons'
-import routes from '@/constants/routes'
+import { routes } from '@/constants/routes'
 import { useTheme } from 'next-themes'
+import { usePathname } from 'next/navigation'
 
 const Header = () => {
 	const { theme, setTheme } = useTheme()
+	const pathname = usePathname()
 
 	return (
 		<header className='flex justify-center items-center py-4 border-b fixed top-0 left-0 right-0 z-50 bg-white dark:bg-gray-900'>
@@ -29,13 +31,15 @@ const Header = () => {
 					<nav className='mx-6 flex items-center gap-4 lg:gap-6'>
 						{routes.map((route, index) => {
 							return (
-								<Button key={index} variant='ghost' asChild>
-									<Link
-										href={route.href}
-										className='text-base font-medium transition-colors duration-200 hover:text-foreground/70'
-									>
-										{route.label}
-									</Link>
+								<Button
+									key={index}
+									variant='ghost'
+									asChild
+									className={`text-base font-medium transition-colors duration-200 hover:text-foreground/70
+										hover:text-blue-500 dark:hover:text-blue-400
+									${pathname === route.href ? 'text-blue-500 dark:text-blue-400' : ''}`}
+								>
+									<Link href={route.href}>{route.label}</Link>
 								</Button>
 							)
 						})}

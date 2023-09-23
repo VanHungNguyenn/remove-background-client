@@ -1,9 +1,11 @@
+'use client'
 import Link from 'next/link'
 import React from 'react'
 import Container from './Container'
 import Image from 'next/image'
-import routes from '@/constants/routes'
+import { routesWithSubRoutes, routes } from '@/constants/routes'
 import { Facebook, Instagram, Twitter } from 'lucide-react'
+import { usePathname } from 'next/navigation'
 
 const socials = [
 	{
@@ -21,11 +23,13 @@ const socials = [
 ]
 
 const Footer = () => {
+	const pathname = usePathname()
+
 	return (
 		<footer className='flex justify-center items-center pt-6 px-4 border-t'>
 			<Container>
-				<div className='flex justify-center items-center'>
-					<div className='relative flex items-center justify-between w-full'>
+				<div className='flex justify-center items-center py-6'>
+					<div className='relative flex justify-between w-full'>
 						{/* Logo */}
 						<Link href='/'>
 							<Image
@@ -37,13 +41,34 @@ const Footer = () => {
 							/>
 						</Link>
 						{/* Navbar */}
-						<nav className='mx-6 flex items-center gap-4 lg:gap-6'>
+						<nav className='mx-6 flex flex-col gap-4 lg:gap-6'>
 							{routes.map((route, index) => {
 								return (
 									<Link
 										href={route.href}
 										key={index}
-										className='text-base font-medium transition-colors duration-200 hover:text-foreground/70'
+										className={`text-base font-medium transition-colors duration-200 hover:text-foreground/70 hover:text-blue-500 dark:hover:text-blue-400 ${
+											pathname === route.href
+												? 'text-blue-500 dark:text-blue-400'
+												: ''
+										}`}
+									>
+										{route.label}
+									</Link>
+								)
+							})}
+						</nav>
+						<nav className='mx-6 flex flex-col gap-4 lg:gap-6'>
+							{routesWithSubRoutes.map((route, index) => {
+								return (
+									<Link
+										href={route.href}
+										key={index}
+										className={`text-base font-medium transition-colors duration-200 hover:text-foreground/70 hover:text-blue-500 dark:hover:text-blue-400 ${
+											pathname === route.href
+												? 'text-blue-500 dark:text-blue-400'
+												: ''
+										}`}
 									>
 										{route.label}
 									</Link>
