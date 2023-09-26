@@ -1,11 +1,29 @@
-import React from 'react'
+'use client'
+import React, { useState } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import Container from '@/components/Container'
+import { signIn } from 'next-auth/react'
 
 const Login = () => {
+	const [username, setUsername] = useState<string>('')
+	const [password, setPassword] = useState<string>('')
+
+	const onSubmit = async (
+		e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+	) => {
+		e.preventDefault()
+
+		await signIn('credentials', {
+			username,
+			password,
+			callbackUrl: '/',
+			redirect: false,
+		})
+	}
+
 	return (
 		<Container>
 			<div className='py-20'>
@@ -15,23 +33,30 @@ const Login = () => {
 							Login to your account
 						</h1>
 						<p className='text-sm text-muted-foreground'>
-							Enter your email below to login to your account
+							Enter username below to login to your account
 						</p>
 					</div>
 					<div className='flex flex-col space-y-4 p-6'>
 						<form>
 							<div className='grid gap-4'>
 								<div className='grid gap-1'>
-									<Label className='sr-only' htmlFor='email'>
-										Email
+									<Label
+										className='sr-only'
+										htmlFor='username'
+									>
+										Username
 									</Label>
 									<Input
-										id='email'
-										placeholder='Email...'
-										type='email'
+										id='username'
+										placeholder='Username...'
+										type='text'
 										autoCapitalize='none'
-										autoComplete='email'
+										autoComplete='username'
 										autoCorrect='off'
+										value={username}
+										onChange={(e) =>
+											setUsername(e.target.value)
+										}
 									/>
 								</div>
 								<div className='grid gap-1'>
@@ -48,9 +73,15 @@ const Login = () => {
 										autoCapitalize='none'
 										autoComplete='current-password'
 										autoCorrect='off'
+										value={password}
+										onChange={(e) =>
+											setPassword(e.target.value)
+										}
 									/>
 								</div>
-								<Button>Login with Email</Button>
+								<Button onClick={onSubmit}>
+									Login with Email
+								</Button>
 							</div>
 						</form>
 						<div className='relative'>

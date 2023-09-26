@@ -15,22 +15,24 @@ const Signup = () => {
 							Create an account
 						</h1>
 						<p className='text-sm text-muted-foreground'>
-							Enter your email below to create your account
+							Enter username below to create your account
 						</p>
 					</div>
 					<div className='flex flex-col space-y-4 p-6'>
 						<form>
 							<div className='grid gap-4'>
 								<div className='grid gap-1'>
-									<Label className='sr-only' htmlFor='email'>
-										Email
+									<Label
+										className='sr-only'
+										htmlFor='username'
+									>
+										Username
 									</Label>
 									<Input
-										id='email'
-										placeholder='Email...'
-										type='email'
+										id='username'
+										placeholder='Username...'
+										type='text'
 										autoCapitalize='none'
-										autoComplete='email'
 										autoCorrect='off'
 									/>
 								</div>
@@ -46,7 +48,6 @@ const Signup = () => {
 										placeholder='Password...'
 										type='password'
 										autoCapitalize='none'
-										autoComplete='current-password'
 										autoCorrect='off'
 									/>
 								</div>
@@ -63,16 +64,12 @@ const Signup = () => {
 										placeholder='Repeat password...'
 										type='password'
 										autoCapitalize='none'
-										autoComplete='current-password'
 										autoCorrect='off'
 									/>
 								</div>
 								{/* name */}
 								<div className='grid gap-1'>
-									<Label
-										className='sr-only'
-										htmlFor='password'
-									>
+									<Label className='sr-only' htmlFor='name'>
 										Name
 									</Label>
 									<Input
@@ -80,7 +77,7 @@ const Signup = () => {
 										placeholder='Name...'
 										type='text'
 										autoCapitalize='none'
-										autoComplete='current-password'
+										autoComplete='name'
 										autoCorrect='off'
 									/>
 								</div>
