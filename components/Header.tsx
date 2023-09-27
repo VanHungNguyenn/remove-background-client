@@ -13,9 +13,9 @@ import { usePathname } from 'next/navigation'
 const Header = () => {
 	const { theme, setTheme } = useTheme()
 	const pathname = usePathname()
-
+	// fixed top-0 left-0 right-0
 	return (
-		<header className='flex justify-center items-center py-4 border-b fixed top-0 left-0 right-0 z-50 bg-white dark:bg-gray-900'>
+		<header className='mx-auto py-4 border-b'>
 			<Container>
 				<div className='relative flex items-center justify-between h-16 w-full px-2'>
 					<Link href='/'>

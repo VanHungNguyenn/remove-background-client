@@ -15,16 +15,27 @@ export const authOptions: NextAuthOptions = {
 				password: { label: 'Password', type: 'password' },
 			},
 			async authorize(credentials, req) {
-				const res = await axiosNoAuth.post('/auth/login', {
-					username: credentials?.username,
-					password: credentials?.password,
-				})
+				// const res = await axiosNoAuth.post('/auth/login', {
+				// 	username: credentials?.username,
+				// 	password: credentials?.password,
+				// })
 
-				console.log(`credentials`, credentials)
+				// console.log(`credentials`, credentials)
 
-				const user = res.data.data
+				// const user = res.data.data
+				const user = {
+					id: '1',
+					name: 'test',
+					email: 'hahaha@gmail.com',
+					password: '123456',
+				}
 
-				if (user) {
+				// console.log(`credentials`, credentials)
+
+				if (
+					credentials?.username === user.name &&
+					credentials?.password === user.password
+				) {
 					return user
 				} else {
 					return null
@@ -32,7 +43,7 @@ export const authOptions: NextAuthOptions = {
 			},
 		}),
 	],
-	pages: {
-		signIn: '/login',
-	},
+	// pages: {
+	// 	signIn: '/login',
+	// },
 }

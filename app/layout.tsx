@@ -25,18 +25,18 @@ export default function RootLayout({
 	return (
 		<html lang='en' suppressHydrationWarning>
 			<body className={poppins.className}>
-				<ThemeProvider
-					attribute='class'
-					defaultTheme='system'
-					enableSystem
-					disableTransitionOnChange
-				>
-					<Providers>
+				<Providers>
+					<ThemeProvider
+						attribute='class'
+						defaultTheme='system'
+						enableSystem
+						disableTransitionOnChange
+					>
 						<Header />
-						<div className='min-h-screen mt-24'>{children}</div>
+						<div className='min-h-screen'>{children}</div>
 						<Footer />
-					</Providers>
-				</ThemeProvider>
+					</ThemeProvider>
+				</Providers>
 			</body>
 		</html>
 	)
