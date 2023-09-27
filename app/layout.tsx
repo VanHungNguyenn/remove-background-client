@@ -6,6 +6,7 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import Providers from './providers'
+import { Toaster } from '@/components/ui/toaster'
 
 const poppins = Poppins({
 	weight: '400',
@@ -34,6 +35,7 @@ export default function RootLayout({
 					>
 						<Header />
 						<div className='min-h-screen'>{children}</div>
+						<Toaster />
 						<Footer />
 					</ThemeProvider>
 				</Providers>

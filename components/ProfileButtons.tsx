@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import { Button } from './ui/button'
 import Link from 'next/link'
@@ -18,58 +19,54 @@ const ProfileButtons = () => {
 
 	const router = useRouter()
 
-	if (session === null) {
+	if (session && session.user) {
 		return (
-			<div className='flex items-center gap-2 lg:gap-3'>
-				<Button
-					variant='default'
-					aria-label='login'
-					onClick={() => signIn()}
-				>
-					Login
-				</Button>
-				<Link href='/signup'>
-					<Button variant='outline' aria-label='signup'>
-						Sign up
-					</Button>
-				</Link>
-			</div>
+			<DropdownMenu>
+				<DropdownMenuTrigger asChild>
+					<Avatar className='cursor-pointer'>
+						<AvatarImage src='/avatar.jpg' />
+						<AvatarFallback>CN</AvatarFallback>
+					</Avatar>
+				</DropdownMenuTrigger>
+				<DropdownMenuContent align='end' forceMount>
+					<DropdownMenuLabel>My Account</DropdownMenuLabel>
+					<DropdownMenuSeparator />
+					<DropdownMenuItem className='cursor-pointer'>
+						Profile
+					</DropdownMenuItem>
+					<DropdownMenuItem
+						className='cursor-pointer'
+						onClick={() => router.push('/dashboard')}
+					>
+						Dashboard
+					</DropdownMenuItem>
+					<DropdownMenuSeparator />
+					<DropdownMenuItem
+						className='cursor-pointer'
+						onClick={() => signOut()}
+					>
+						Logout
+					</DropdownMenuItem>
+				</DropdownMenuContent>
+			</DropdownMenu>
 		)
 	}
 
 	return (
-		<>
-			{session && (
-				<DropdownMenu>
-					<DropdownMenuTrigger asChild>
-						<Avatar className='cursor-pointer'>
-							<AvatarImage src='/avatar.jpg' />
-							<AvatarFallback>CN</AvatarFallback>
-						</Avatar>
-					</DropdownMenuTrigger>
-					<DropdownMenuContent align='end' forceMount>
-						<DropdownMenuLabel>My Account</DropdownMenuLabel>
-						<DropdownMenuSeparator />
-						<DropdownMenuItem className='cursor-pointer'>
-							Profile
-						</DropdownMenuItem>
-						<DropdownMenuItem
-							className='cursor-pointer'
-							onClick={() => router.push('/dashboard')}
-						>
-							Dashboard
-						</DropdownMenuItem>
-						<DropdownMenuSeparator />
-						<DropdownMenuItem
-							className='cursor-pointer'
-							onClick={() => signOut()}
-						>
-							Logout
-						</DropdownMenuItem>
-					</DropdownMenuContent>
-				</DropdownMenu>
-			)}
-		</>
+		<div className='flex items-center gap-2 lg:gap-3'>
+			<Button
+				variant='default'
+				aria-label='login'
+				onClick={() => signIn()}
+			>
+				Login
+			</Button>
+			<Link href='/signup'>
+				<Button variant='outline' aria-label='signup'>
+					Sign up
+				</Button>
+			</Link>
+		</div>
 	)
 }
 

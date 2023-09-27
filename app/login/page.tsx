@@ -6,22 +6,49 @@ import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import Container from '@/components/Container'
 import { signIn } from 'next-auth/react'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { useToast } from '@/components/ui/use-toast'
 
 const Login = () => {
+	const router = useRouter()
+	const [loading, setLoading] = useState<boolean>(false)
 	const [username, setUsername] = useState<string>('')
 	const [password, setPassword] = useState<string>('')
+	const searchParams = useSearchParams()
+	const { toast } = useToast()
+
+	const callbackUrl = searchParams.get('callbackUrl') || '/'
 
 	const onSubmit = async (
 		e: React.MouseEvent<HTMLButtonElement, MouseEvent>
 	) => {
-		e.preventDefault()
+		try {
+			e.preventDefault()
+			setLoading(true)
 
-		await signIn('credentials', {
-			username,
-			password,
-			callbackUrl: '/',
-			redirect: false,
-		})
+			const res = await signIn('credentials', {
+				username,
+				password,
+				callbackUrl: callbackUrl,
+				redirect: false,
+			})
+
+			setLoading(false)
+
+			toast({
+				title: 'Login successful',
+				description: 'You have been logged in',
+			})
+
+			if (res?.error) {
+				return
+			} else {
+				router.push(callbackUrl)
+			}
+		} catch (error: any) {
+			setLoading(false)
+			console.error(error.message)
+		}
 	}
 
 	return (
