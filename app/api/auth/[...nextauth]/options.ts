@@ -15,35 +15,55 @@ export const authOptions: NextAuthOptions = {
 				password: { label: 'Password', type: 'password' },
 			},
 			async authorize(credentials, req) {
-				// const res = await axiosNoAuth.post('/auth/login', {
-				// 	username: credentials?.username,
-				// 	password: credentials?.password,
-				// })
-
-				// console.log(`credentials`, credentials)
-
-				// const user = res.data.data
-				const user = {
-					id: '1',
-					name: 'test',
-					email: 'hahaha@gmail.com',
-					password: '123456',
-				}
-
-				// console.log(`credentials`, credentials)
-
-				if (
-					credentials?.username === user.name &&
-					credentials?.password === user.password
-				) {
-					return user
-				} else {
+				if (!credentials?.username || !credentials?.password) {
 					return null
 				}
+
+				const { username, password } = credentials
+
+				const res = await axiosNoAuth.post('/auth/login', {
+					username,
+					password,
+				})
+
+				console.log(res)
+
+				if (res.status === 401) {
+					console.log(`res`, res)
+
+					return null
+				}
+
+				const user = res.data
+
+				return user
 			},
 		}),
 	],
 	pages: {
 		signIn: '/login',
+	},
+	callbacks: {
+		async jwt({ token, user }) {
+			console.log(`token`, token)
+			console.log(`user`, user)
+
+			if (user) {
+				return { ...token, ...user }
+			}
+
+			return token
+		},
+
+		async session({ session, token }) {
+			console.log(`session`, session)
+			console.log(`token`, token)
+
+			if (token) {
+				return { ...session, ...token }
+			}
+
+			return session
+		},
 	},
 }

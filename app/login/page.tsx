@@ -35,12 +35,14 @@ const Login = () => {
 
 			setLoading(false)
 
-			toast({
-				title: 'Login successful',
-				description: 'You have been logged in',
-			})
+			console.log(res)
 
 			if (res?.error) {
+				toast({
+					title: 'Error',
+					description: res.error,
+					variant: 'destructive',
+				})
 				return
 			} else {
 				router.push(callbackUrl)
