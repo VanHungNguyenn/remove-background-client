@@ -49,7 +49,7 @@ const Login = () => {
 			}
 		} catch (error: any) {
 			setLoading(false)
-			console.error(error.message)
+			// console.error(error.message)
 		}
 	}
 
