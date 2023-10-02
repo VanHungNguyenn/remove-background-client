@@ -1,6 +1,8 @@
 import { axiosNoAuth } from '@/lib/axios'
+import axios from 'axios'
 import type { NextAuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
+import { Session } from 'next-auth'
 
 export const authOptions: NextAuthOptions = {
 	providers: [
@@ -19,25 +21,25 @@ export const authOptions: NextAuthOptions = {
 					return null
 				}
 
-				const { username, password } = credentials
+				try {
+					const { username, password } = credentials
 
-				console.log(`username`, username)
-				console.log(`password`, password)
+					console.log(`username`, username)
+					console.log(`password`, password)
 
-				const res = await axiosNoAuth.post('/auth/login', {
-					username,
-					password,
-				})
+					const res = await axiosNoAuth.post('/auth/login', {
+						username,
+						password,
+					})
 
-				console.log(`res.data`, res.data)
+					const user = res.data.data
 
-				const user = res.data.data
-
-				console.log(`user`, user)
-
-				if (user) {
-					return user
-				} else {
+					if (user) {
+						return user
+					} else {
+						return null
+					}
+				} catch (error) {
 					return null
 				}
 			},
@@ -46,27 +48,24 @@ export const authOptions: NextAuthOptions = {
 	pages: {
 		signIn: '/login',
 	},
-	// callbacks: {
-	// 	async jwt({ token, user }) {
-	// 		console.log(`token`, token)
-	// 		console.log(`user`, user)
+	callbacks: {
+		async jwt({ token, user }) {
+			if (user) {
+				return { ...token, ...user }
+			}
 
-	// 		if (user) {
-	// 			return { ...token, ...user }
-	// 		}
+			return token
+		},
 
-	// 		return token
-	// 	},
+		async session({ session, token }) {
+			if (token) {
+				return {
+					...session,
+					user: { ...session.user, ...token },
+				}
+			}
 
-	// 	async session({ session, token }) {
-	// 		console.log(`session`, session)
-	// 		console.log(`token`, token)
-
-	// 		if (token) {
-	// 			return { ...session, ...token }
-	// 		}
-
-	// 		return session
-	// 	},
-	// },
+			return session
+		},
+	},
 }

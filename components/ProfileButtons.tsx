@@ -24,12 +24,20 @@ const ProfileButtons = () => {
 			<DropdownMenu>
 				<DropdownMenuTrigger asChild>
 					<Avatar className='cursor-pointer'>
-						<AvatarImage src='/avatar.jpg' />
-						<AvatarFallback>CN</AvatarFallback>
+						<AvatarImage
+							src={session.user?.image ? session.user.image : ''}
+						/>
+						<AvatarFallback>
+							{session.user?.username
+								? session.user.username.charAt(0).toUpperCase()
+								: ''}
+						</AvatarFallback>
 					</Avatar>
 				</DropdownMenuTrigger>
 				<DropdownMenuContent align='end' forceMount>
-					<DropdownMenuLabel>My Account</DropdownMenuLabel>
+					<DropdownMenuLabel>
+						{session.user?.username.toUpperCase()}
+					</DropdownMenuLabel>
 					<DropdownMenuSeparator />
 					<DropdownMenuItem className='cursor-pointer'>
 						Profile

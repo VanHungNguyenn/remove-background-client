@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
@@ -17,7 +17,11 @@ const Login = () => {
 	const searchParams = useSearchParams()
 	const { toast } = useToast()
 
-	const callbackUrl = searchParams.get('callbackUrl') || '/'
+	let callbackUrl = searchParams.get('callbackUrl') || '/'
+
+	if (callbackUrl === '/register') {
+		callbackUrl = '/'
+	}
 
 	const onSubmit = async (
 		e: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -29,27 +33,24 @@ const Login = () => {
 			const res = await signIn('credentials', {
 				username,
 				password,
-				callbackUrl: callbackUrl,
 				redirect: false,
 			})
 
 			setLoading(false)
 
-			console.log(res)
-
 			if (res?.error) {
 				toast({
 					title: 'Error',
-					description: res.error,
+					description: 'Username or password incorrect',
 					variant: 'destructive',
 				})
+
 				return
 			} else {
 				router.push(callbackUrl)
 			}
 		} catch (error: any) {
 			setLoading(false)
-			// console.error(error.message)
 		}
 	}
 

@@ -22,9 +22,7 @@ axiosAuth.interceptors.request.use(
 		const session = await getServerSession(authOptions)
 
 		if (session) {
-			config.headers[
-				'Authorization'
-			] = `Bearer ${session?.user?.accessToken}`
+			config.headers['Authorization'] = `Bearer ${session?.user?.token}`
 		}
 
 		return config

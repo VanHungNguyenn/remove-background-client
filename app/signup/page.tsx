@@ -67,21 +67,21 @@ const Signup = () => {
 										autoCorrect='off'
 									/>
 								</div>
-								{/* name */}
+								{/* email */}
 								<div className='grid gap-1'>
-									<Label className='sr-only' htmlFor='name'>
-										Name
+									<Label className='sr-only' htmlFor='email'>
+										Email
 									</Label>
 									<Input
-										id='name'
-										placeholder='Name...'
+										id='email'
+										placeholder='Email...'
 										type='text'
 										autoCapitalize='none'
 										autoComplete='name'
 										autoCorrect='off'
 									/>
 								</div>
-								<Button>Sign Up with Email</Button>
+								<Button>Sign Up</Button>
 							</div>
 						</form>
 						<div className='relative'>
@@ -94,7 +94,9 @@ const Signup = () => {
 								</span>
 							</div>
 						</div>
-						<Button variant='outline'>Google</Button>
+						<Button variant='outline' disabled={true}>
+							Google
+						</Button>
 					</div>
 					<p className='px-8 text-center text-sm text-muted-foreground'>
 						By clicking continue, you agree to our{' '}
