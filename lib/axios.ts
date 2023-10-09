@@ -2,6 +2,7 @@ import axios from 'axios'
 const BASE_URL = process.env.BASE_URL
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/app/api/auth/[...nextauth]/options'
+import { redirect } from 'next/navigation'
 
 export const axiosNoAuth = axios.create({
 	baseURL: BASE_URL,
@@ -40,6 +41,7 @@ axios.interceptors.response.use(
 	(error) => {
 		if (error.response.status === 401 || error.response.status === 403) {
 			console.log('Unauthorized')
+			redirect('/login')
 		}
 
 		return Promise.reject(error)

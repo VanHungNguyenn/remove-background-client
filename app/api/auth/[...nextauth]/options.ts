@@ -59,9 +59,21 @@ export const authOptions: NextAuthOptions = {
 
 		async session({ session, token }) {
 			if (token) {
+				const { id, username, email, role, token: jwtToken } = token
+
 				return {
 					...session,
-					user: { ...session.user, ...token },
+					user: {
+						id,
+						username,
+						email,
+						role,
+						token: jwtToken,
+						image:
+							typeof session.user.image === 'string'
+								? session.user.image
+								: undefined,
+					},
 				}
 			}
 

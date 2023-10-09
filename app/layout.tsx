@@ -4,9 +4,9 @@ import type { Metadata } from 'next'
 import { Poppins } from 'next/font/google'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
-import { ThemeProvider } from '@/components/ThemeProvider'
 import Providers from './providers'
-import { Toaster } from '@/components/ui/toaster'
+import ToasterProvider from '@/components/providers/toaster-provider'
+import { ThemeProvider } from '@/components/providers/ThemeProvider'
 
 const poppins = Poppins({
 	weight: '400',
@@ -26,19 +26,19 @@ export default function RootLayout({
 	return (
 		<html lang='en' suppressHydrationWarning>
 			<body className={poppins.className}>
-				<Providers>
-					<ThemeProvider
-						attribute='class'
-						defaultTheme='system'
-						enableSystem
-						disableTransitionOnChange
-					>
+				<ThemeProvider
+					attribute='class'
+					defaultTheme='system'
+					enableSystem
+					disableTransitionOnChange
+				>
+					<Providers>
+						<ToasterProvider />
 						<Header />
 						<div className='min-h-screen'>{children}</div>
-						<Toaster />
 						<Footer />
-					</ThemeProvider>
-				</Providers>
+					</Providers>
+				</ThemeProvider>
 			</body>
 		</html>
 	)

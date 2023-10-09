@@ -1,5 +1,5 @@
 import React from 'react'
-import Container from './Container'
+import Container from '../../../components/Container'
 import Image from 'next/image'
 import { Star } from 'lucide-react'
 import { listReviews } from '@/constants/content'

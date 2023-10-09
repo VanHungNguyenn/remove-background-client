@@ -1,6 +1,6 @@
 import React from 'react'
-import Container from './Container'
-import { Button } from './ui/button'
+import Container from '@/components/Container'
+import { Button } from '@/components/ui/button'
 import Image from 'next/image'
 import Link from 'next/link'
 

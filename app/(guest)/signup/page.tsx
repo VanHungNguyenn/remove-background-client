@@ -1,57 +1,41 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import Container from '@/components/Container'
-import { signIn } from 'next-auth/react'
-import { useRouter, useSearchParams } from 'next/navigation'
-import { useToast } from '@/components/ui/use-toast'
+import { useRouter } from 'next/navigation'
+import toast from 'react-hot-toast'
 
-const Login = () => {
+const Signup = () => {
 	const router = useRouter()
-	const [loading, setLoading] = useState<boolean>(false)
-	const [username, setUsername] = useState<string>('')
-	const [password, setPassword] = useState<string>('')
-	const searchParams = useSearchParams()
-	const { toast } = useToast()
 
-	let callbackUrl = searchParams.get('callbackUrl') || '/'
-
-	if (callbackUrl === '/register') {
-		callbackUrl = '/'
-	}
+	const [formData, setFormData] = useState({
+		username: '',
+		password: '',
+		repeatPassword: '',
+		email: '',
+	})
 
 	const onSubmit = async (
 		e: React.MouseEvent<HTMLButtonElement, MouseEvent>
 	) => {
 		try {
 			e.preventDefault()
-			setLoading(true)
 
-			const res = await signIn('credentials', {
-				username,
-				password,
-				redirect: false,
-			})
-
-			setLoading(false)
-
-			if (res?.error) {
-				toast({
-					title: 'Error',
-					description: 'Username or password incorrect',
-					variant: 'destructive',
-				})
-
-				return
-			} else {
-				router.push(callbackUrl)
-			}
+			console.log(formData)
 		} catch (error: any) {
-			setLoading(false)
+			toast.error(error.message)
 		}
+	}
+
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const { name, value } = e.target
+		setFormData((prevState) => ({
+			...prevState,
+			[name]: value,
+		}))
 	}
 
 	return (
@@ -60,10 +44,10 @@ const Login = () => {
 				<div className='mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]'>
 					<div className='flex flex-col space-y-2 text-center'>
 						<h1 className='text-2xl font-semibold tracking-tight'>
-							Login to your account
+							Create an account
 						</h1>
 						<p className='text-sm text-muted-foreground'>
-							Enter username below to login to your account
+							Enter username below to create your account
 						</p>
 					</div>
 					<div className='flex flex-col space-y-4 p-6'>
@@ -81,12 +65,7 @@ const Login = () => {
 										placeholder='Username...'
 										type='text'
 										autoCapitalize='none'
-										autoComplete='username'
 										autoCorrect='off'
-										value={username}
-										onChange={(e) =>
-											setUsername(e.target.value)
-										}
 									/>
 								</div>
 								<div className='grid gap-1'>
@@ -101,16 +80,41 @@ const Login = () => {
 										placeholder='Password...'
 										type='password'
 										autoCapitalize='none'
-										autoComplete='current-password'
 										autoCorrect='off'
-										value={password}
-										onChange={(e) =>
-											setPassword(e.target.value)
-										}
 									/>
 								</div>
-								<Button onClick={onSubmit}>
-									Login with Email
+								{/* Repeat password */}
+								<div className='grid gap-1'>
+									<Label
+										className='sr-only'
+										htmlFor='password'
+									>
+										Repeat password
+									</Label>
+									<Input
+										id='repeat_password'
+										placeholder='Repeat password...'
+										type='password'
+										autoCapitalize='none'
+										autoCorrect='off'
+									/>
+								</div>
+								{/* email */}
+								<div className='grid gap-1'>
+									<Label className='sr-only' htmlFor='email'>
+										Email
+									</Label>
+									<Input
+										id='email'
+										placeholder='Email...'
+										type='text'
+										autoCapitalize='none'
+										autoComplete='name'
+										autoCorrect='off'
+									/>
+								</div>
+								<Button onClick={onSubmit} type='submit'>
+									Sign Up
 								</Button>
 							</div>
 						</form>
@@ -151,4 +155,4 @@ const Login = () => {
 	)
 }
 
-export default Login
+export default Signup
