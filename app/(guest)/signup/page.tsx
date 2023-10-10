@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input'
 import Container from '@/components/Container'
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
+import { axiosNoAuth } from '@/lib/axios'
 
 const Signup = () => {
 	const router = useRouter()
@@ -24,9 +25,17 @@ const Signup = () => {
 		try {
 			e.preventDefault()
 
-			console.log(formData)
+			const res = await axiosNoAuth.post('/auth/register', {
+				username: formData.username,
+				password: formData.password,
+				email: formData.email,
+				confirmPassword: formData.repeatPassword,
+			})
+
+			toast.success(res.data.message)
+			router.push('/login')
 		} catch (error: any) {
-			toast.error(error.message)
+			error.response && toast.error(error.response.data.message)
 		}
 	}
 
@@ -55,70 +64,95 @@ const Signup = () => {
 							<div className='grid gap-4'>
 								<div className='grid gap-1'>
 									<Label
-										className='sr-only'
+										className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 mb-2'
 										htmlFor='username'
 									>
 										Username
 									</Label>
 									<Input
 										id='username'
-										placeholder='Username...'
+										placeholder='e.g. john_doe'
 										type='text'
 										autoCapitalize='none'
 										autoCorrect='off'
+										value={formData.username}
+										onChange={handleChange}
+										name='username'
 									/>
 								</div>
 								<div className='grid gap-1'>
 									<Label
-										className='sr-only'
+										className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 mb-2'
 										htmlFor='password'
 									>
 										Password
 									</Label>
 									<Input
 										id='password'
-										placeholder='Password...'
+										placeholder='********'
 										type='password'
 										autoCapitalize='none'
 										autoCorrect='off'
+										value={formData.password}
+										onChange={handleChange}
+										name='password'
 									/>
 								</div>
 								{/* Repeat password */}
 								<div className='grid gap-1'>
 									<Label
-										className='sr-only'
+										className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 mb-2'
 										htmlFor='password'
 									>
 										Repeat password
 									</Label>
 									<Input
 										id='repeat_password'
-										placeholder='Repeat password...'
+										placeholder='********'
 										type='password'
 										autoCapitalize='none'
 										autoCorrect='off'
+										value={formData.repeatPassword}
+										onChange={handleChange}
+										name='repeatPassword'
 									/>
 								</div>
 								{/* email */}
 								<div className='grid gap-1'>
-									<Label className='sr-only' htmlFor='email'>
+									<Label
+										className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 mb-2'
+										htmlFor='email'
+									>
 										Email
 									</Label>
 									<Input
 										id='email'
-										placeholder='Email...'
+										placeholder='e.g johndoe@gmail.com'
 										type='text'
 										autoCapitalize='none'
 										autoComplete='name'
 										autoCorrect='off'
+										value={formData.email}
+										onChange={handleChange}
+										name='email'
 									/>
 								</div>
 								<Button onClick={onSubmit} type='submit'>
 									Sign Up
 								</Button>
+								<p className='text-sm text-muted-foreground'>
+									Already have an account?{' '}
+									<Link
+										href='/login'
+										className='underline underline-offset-4 hover:text-foreground'
+									>
+										Login
+									</Link>
+									.
+								</p>
 							</div>
 						</form>
-						<div className='relative'>
+						{/* <div className='relative'>
 							<div className='absolute inset-0 flex items-center'>
 								<span className='w-full border-t' />
 							</div>
@@ -130,7 +164,7 @@ const Signup = () => {
 						</div>
 						<Button variant='outline' disabled={true}>
 							Google
-						</Button>
+						</Button> */}
 					</div>
 					<p className='px-8 text-center text-sm text-muted-foreground'>
 						By clicking continue, you agree to our{' '}

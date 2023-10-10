@@ -1,18 +1,19 @@
 import axios from 'axios'
-const BASE_URL = process.env.BASE_URL
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/app/api/auth/[...nextauth]/options'
 import { redirect } from 'next/navigation'
 
+const NEXT_PUBLIC_API_URL = process.env.NEXT_PUBLIC_API_URL
+
 export const axiosNoAuth = axios.create({
-	baseURL: BASE_URL,
+	baseURL: NEXT_PUBLIC_API_URL,
 	headers: {
 		'Content-Type': 'application/json',
 	},
 })
 
 export const axiosAuth = axios.create({
-	baseURL: BASE_URL,
+	baseURL: NEXT_PUBLIC_API_URL,
 	headers: {
 		'Content-Type': 'application/json',
 	},

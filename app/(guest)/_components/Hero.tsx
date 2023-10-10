@@ -18,12 +18,14 @@ const Hero = () => {
 					</h3>
 					<div className='flex flex-col h-[200px] max-w-[475px] w-full items-center justify-center rounded-md border border-dashed text-sm bg-gray-100 dark:bg-gray-800 text-center cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200'>
 						{/* Button center */}
-						<Button size='lg' className='mb-2'>
-							CHOOSE A PHOTO
-						</Button>
-						<span className='text-foreground/60 text-sm'>
+						<Link href='/remove-background'>
+							<Button size='lg' className='mb-2'>
+								TRY NOW
+							</Button>
+						</Link>
+						{/* <span className='text-foreground/60 text-sm'>
 							or Drag and Drop images
-						</span>
+						</span> */}
 					</div>
 					<div className='text-foreground/60 text-sm mt-1'>
 						By uploading an image or URL you agree to our{' '}

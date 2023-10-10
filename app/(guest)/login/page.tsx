@@ -67,14 +67,14 @@ const Login = () => {
 							<div className='grid gap-4'>
 								<div className='grid gap-1'>
 									<Label
-										className='sr-only'
+										className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 mb-2'
 										htmlFor='username'
 									>
 										Username
 									</Label>
 									<Input
 										id='username'
-										placeholder='Username...'
+										placeholder='e.g john_doe'
 										type='text'
 										autoCapitalize='none'
 										autoComplete='username'
@@ -87,14 +87,14 @@ const Login = () => {
 								</div>
 								<div className='grid gap-1'>
 									<Label
-										className='sr-only'
+										className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 mb-2'
 										htmlFor='password'
 									>
 										Password
 									</Label>
 									<Input
 										id='password'
-										placeholder='Password...'
+										placeholder='********'
 										type='password'
 										autoCapitalize='none'
 										autoComplete='current-password'
@@ -110,7 +110,7 @@ const Login = () => {
 								</Button>
 							</div>
 						</form>
-						<div className='relative'>
+						{/* <div className='relative'>
 							<div className='absolute inset-0 flex items-center'>
 								<span className='w-full border-t' />
 							</div>
@@ -122,7 +122,7 @@ const Login = () => {
 						</div>
 						<Button variant='outline' disabled={true}>
 							Google
-						</Button>
+						</Button> */}
 					</div>
 					<p className='px-8 text-center text-sm text-muted-foreground'>
 						By clicking continue, you agree to our{' '}
